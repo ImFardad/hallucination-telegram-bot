@@ -67,10 +67,11 @@ Deploy directly from the Cloudflare Web Dashboard without installing anything lo
 2. Click **Create Application** > **Workers** > **Connect to Git**.
 3. Select your GitHub repository (`ImFardad/hallucination-telegram-bot`).
 4. Click **Save and Deploy**. Cloudflare will automatically build and deploy your worker.
-5. In your Worker dashboard:
-   - Go to **Settings** > **Variables and Secrets** > add `TELEGRAM_BOT_TOKEN`.
-   - Go to **Settings** > **Bindings** > add a **KV namespace** bound to variable name `CHAT_HISTORY`.
-   - Go to **Settings** > **Bindings** > add a **Workers AI** binding bound to variable name `AI`.
+5. That's it! Cloudflare will automatically:
+   - Bind **Workers AI** (`AI`).
+   - Auto-provision and link the **KV namespace** (`CHAT_HISTORY`).
+   - Register the environment variables (`TELEGRAM_BOT_TOKEN`, `AI_MODEL`, etc.).
+6. Go to **Settings** > **Variables and Secrets** on your Worker, and simply paste your Bot Token into `TELEGRAM_BOT_TOKEN`.
 
 ---
 
@@ -108,33 +109,17 @@ Authenticate Wrangler with your Cloudflare account:
 npx wrangler login
 ```
 
-### 3. Create Cloudflare KV Namespace
+### 3. Deploy to Cloudflare Workers
 
-Create a KV namespace for storing conversation history:
+Deploy your worker to Cloudflare's edge (Wrangler will automatically provision the `CHAT_HISTORY` KV namespace and link Workers AI):
 
 ```bash
-npx wrangler kv namespace create CHAT_HISTORY
+npm run deploy
 ```
 
-The terminal will output a snippet like this:
-```jsonc
-{ "binding": "CHAT_HISTORY", "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" }
-```
+### 4. Configure Bot Token
 
-Open [wrangler.jsonc](./wrangler.jsonc) and replace `YOUR_KV_NAMESPACE_ID` with your generated ID:
-
-```jsonc
-"kv_namespaces": [
-  {
-    "binding": "CHAT_HISTORY",
-    "id": "your_kv_namespace_id_here"
-  }
-]
-```
-
-### 4. Configure Bot Secrets
-
-Add your Telegram Bot token as a secure secret in Cloudflare:
+Set your Telegram Bot token as a secure secret in Cloudflare:
 
 ```bash
 npx wrangler secret put TELEGRAM_BOT_TOKEN
@@ -148,15 +133,7 @@ npx wrangler secret put SECRET_TOKEN
 ```
 *(Enter any random secure string consisting of `A-Z`, `a-z`, `0-9`, `_`, and `-`)*
 
-### 5. Deploy to Cloudflare Workers
-
-Deploy your worker to Cloudflare's edge:
-
-```bash
-npm run deploy
-```
-
-Once deployment finishes, Wrangler will output your live worker URL:
+Once deployed, your live worker URL will be:
 ```text
 https://hallucination-telegram-bot.<your-subdomain>.workers.dev
 ```

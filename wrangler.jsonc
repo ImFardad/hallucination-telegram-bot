@@ -10,17 +10,19 @@
     "binding": "AI"
   },
 
-  // Cloudflare KV Namespace for Chat Memory
-  // Run `npx wrangler kv namespace create CHAT_HISTORY` and paste the returned ID here
+  // Cloudflare KV Namespace for Chat Memory (auto-provisioned by Cloudflare)
   "kv_namespaces": [
     {
-      "binding": "CHAT_HISTORY",
-      "id": "YOUR_KV_NAMESPACE_ID"
+      "binding": "CHAT_HISTORY"
     }
   ],
 
   // Environment variables
   "vars": {
+    // Fill with your Telegram Bot Token in the Cloudflare Dashboard
+    "TELEGRAM_BOT_TOKEN": "",
+    // Optional secret token for webhook verification
+    "SECRET_TOKEN": "",
     // Lightweight model with strong multilingual / Persian capabilities
     "AI_MODEL": "@cf/meta/llama-3.2-3b-instruct",
     // Number of recent conversation messages to retain in memory
