@@ -1,0 +1,6 @@
+# Telegram Bot API Token obtained from @BotFather
+TELEGRAM_BOT_TOKEN="123456789:ABCDefGhIJKlmNoPQRsTUVwxyZ"
+
+# Optional secret token to authenticate Telegram Webhook calls (recommended)
+# Must contain only characters A-Z, a-z, 0-9, _ and -
+SECRET_TOKEN="your_custom_secret_token_here"
