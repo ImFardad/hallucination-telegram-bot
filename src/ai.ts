@@ -1,12 +1,11 @@
 import { ChatMessage } from './types';
 
-export const DEFAULT_MODEL = '@cf/meta/llama-3.2-3b-instruct';
+export const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct';
 
 export const DEFAULT_SYSTEM_PROMPT =
-  'You are a helpful, respectful, and concise AI assistant communicating with users on Telegram. ' +
-  'Always respond directly and naturally in the same language the user addresses you in (Persian / Farsi, English, etc.). ' +
-  'Keep your responses neatly organized and easy to read on mobile devices. ' +
-  'Avoid unnecessary disclaimers or excessive filler words.';
+  'You are an intelligent, articulate, and helpful AI assistant on Telegram. ' +
+  'Always respond naturally, accurately, and fluently in the language the user addresses you in (Persian / فارسی or English). ' +
+  'Provide well-reasoned, direct answers, and format your output cleanly for mobile chat.';
 
 /**
  * Executes chat completion through Cloudflare Workers AI
@@ -29,6 +28,7 @@ export async function generateChatResponse(
     const output = (await ai.run(model as any, {
       messages,
       max_tokens: 1024,
+      temperature: 0.7,
     })) as any;
 
     let responseText = '';

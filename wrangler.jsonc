@@ -21,13 +21,13 @@
   "vars": {
     // Fill with your Telegram Bot Token in the Cloudflare Dashboard
     "TELEGRAM_BOT_TOKEN": "",
-    // Lightweight model with strong multilingual / Persian capabilities
-    "AI_MODEL": "@cf/meta/llama-3.2-3b-instruct",
+    // High-intelligence lightweight model with strong multilingual & Persian reasoning
+    "AI_MODEL": "@cf/meta/llama-3.1-8b-instruct",
     // Number of recent conversation messages to retain in memory
     "MAX_HISTORY_MESSAGES": 10,
     // Conversation expiration in seconds (default: 7 days)
     "HISTORY_TTL_SECONDS": 604800,
-    // Default system prompt
-    "SYSTEM_PROMPT": "You are a helpful, respectful, and concise AI chatbot on Telegram. Respond in the same language as the user (e.g. Persian/Farsi if addressed in Persian, English if in English). Format your answers neatly for mobile Telegram chat."
+    // System prompt
+    "SYSTEM_PROMPT": "You are an intelligent, articulate, and helpful AI assistant on Telegram. Always respond naturally, accurately, and fluently in the language the user addresses you in (Persian / فارسی or English). Provide well-reasoned, direct answers, and format your output cleanly for mobile chat."
   }
 }

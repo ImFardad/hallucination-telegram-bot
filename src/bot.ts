@@ -35,13 +35,10 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
     switch (command) {
       case '/start': {
         const startMessage =
-          '👋 **Hello!** I am an AI assistant running entirely on **Cloudflare Workers** using **Workers AI**.\n\n' +
-          '💬 You can talk to me in **English** or **Persian (فارسی)**. I remember our ongoing conversation context.\n\n' +
-          '📌 **Available Commands:**\n' +
-          '• `/new` or `/clear` - Reset conversation history and start fresh\n' +
-          '• `/model` - View the active AI model\n' +
-          '• `/help` - Show usage tips and help\n\n' +
-          'Send me any message to get started!';
+          '👋 سلام! من دستیار هوش مصنوعی شما هستم.\n' +
+          'هر پیام یا سوالی دارید به فارسی یا انگلیسی بفرستید تا گفتگو کنیم. 💬\n\n' +
+          '• `/new` — شروع چت جدید (پاک‌سازی حافظه)\n' +
+          '• `/help` — راهنما';
         await sendMessage(token, chatId, startMessage);
         return;
       }

@@ -11,7 +11,7 @@ Built with a fast, low-consumption model supporting fluent **Persian (فارسی
 ## ✨ Features
 
 - **⚡ Serverless & Lightweight**: Runs entirely on Cloudflare Workers edge network with zero server maintenance and instant cold starts.
-- **🧠 Cloudflare Workers AI**: Powered by `@cf/meta/llama-3.2-3b-instruct` by default — exceptionally low compute unit consumption, fast response times, and strong multilingual capabilities (Persian & English).
+- **🧠 Cloudflare Workers AI**: Powered by `@cf/meta/llama-3.1-8b-instruct` by default — high intelligence and reasoning, fast inference, low compute consumption, and fluent Persian & English support.
 - **💾 Conversation Memory**: Retains multi-turn conversation context stored in Cloudflare KV with a sliding window (default: last 10 messages) and configurable TTL (auto-expires inactive sessions after 7 days).
 - **🔄 Chat Reset**: Start fresh at any time using `/new`, `/clear`, or `/reset`.
 - **💬 Real-time Typing Status**: Displays Telegram's "typing..." action while generating AI responses.
