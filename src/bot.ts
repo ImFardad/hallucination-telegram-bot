@@ -89,12 +89,8 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
     const history = await getHistory(env.CHAT_HISTORY, chatId);
 
     const temperature =
-      env.TEMPERATURE !== undefined && env.TEMPERATURE !== '' ? Number(env.TEMPERATURE) : 1.35;
-    const topP = env.TOP_P !== undefined && env.TOP_P !== '' ? Number(env.TOP_P) : 0.98;
-    const repetitionPenalty =
-      env.REPETITION_PENALTY !== undefined && env.REPETITION_PENALTY !== ''
-        ? Number(env.REPETITION_PENALTY)
-        : 1.15;
+      env.TEMPERATURE !== undefined && env.TEMPERATURE !== '' ? Number(env.TEMPERATURE) : 0.8;
+    const topP = env.TOP_P !== undefined && env.TOP_P !== '' ? Number(env.TOP_P) : 0.9;
 
     // 2. Generate response from Workers AI
     const aiReply = await generateChatResponse(
@@ -103,7 +99,7 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
       systemPrompt,
       history,
       rawText,
-      { temperature, topP, repetitionPenalty }
+      { temperature, topP }
     );
 
     // 3. Save new exchange into KV history

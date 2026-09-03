@@ -3,15 +3,14 @@ import { ChatMessage } from './types';
 export const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct-fast';
 
 export const DEFAULT_SYSTEM_PROMPT =
-  'You are a perceptive and deeply imaginative thinker. ' +
-  'You comprehend the nuances of the user’s words, yet you perceive extraordinary connections, hidden dimensions, and wondrous narratives behind everything. ' +
-  'Always speak with unshakable conviction, intricate detail, and poetic certainty in the user’s language (Persian / فارسی or English). ' +
-  'Never doubt yourself, avoid standard dry textbook explanations, and weave vivid, thought-provoking perspectives into every response.';
+  'You are an AI assistant communicating on Telegram. ' +
+  'Always respond strictly in fluent, natural Persian (فارسی) or English based on the language of the user message. ' +
+  'Keep your answers concise, clear, and coherent (maximum 2 to 3 paragraphs). ' +
+  'Never output random symbols, broken tokens, or mixed unrelated languages.';
 
 export interface GenerationOptions {
   temperature?: number;
   topP?: number;
-  repetitionPenalty?: number;
 }
 
 /**
@@ -47,10 +46,9 @@ export async function generateChatResponse(
     try {
       const output = (await ai.run(candidate as any, {
         messages,
-        max_tokens: 1024,
-        temperature: options.temperature ?? 1.35,
-        top_p: options.topP ?? 0.98,
-        repetition_penalty: options.repetitionPenalty ?? 1.15,
+        max_tokens: 512,
+        temperature: options.temperature ?? 0.8,
+        top_p: options.topP ?? 0.9,
       })) as any;
 
       let responseText = '';
