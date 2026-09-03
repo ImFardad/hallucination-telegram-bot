@@ -1,5 +1,7 @@
 # 🤖 Hallucination Telegram AI Bot
 
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/ImFardad/hallucination-telegram-bot)
+
 A lightweight, serverless Telegram AI chatbot designed for zero-idle-cost deployment on **Cloudflare Workers** using native **Workers AI**.
 
 Built with a fast, low-consumption model supporting fluent **Persian (فارسی)** and **English**, persistent conversation memory via **Cloudflare KV**, and complete conversational reset controls.
@@ -40,9 +42,57 @@ Before deploying, ensure you have:
 
 ---
 
-## 🚀 Quickstart & Deployment Guide
+## 🚀 Deployment Options
 
-### 1. Clone & Install Dependencies
+Choose the method that suits your workflow best:
+
+### Option 1: 1-Click Deploy (Easiest)
+
+Click the button below to instantly deploy to your Cloudflare account via browser:
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/ImFardad/hallucination-telegram-bot)
+
+1. Sign in to your Cloudflare account.
+2. Cloudflare will automatically fork the repo, create the Worker, and set up your bindings.
+3. Add your `TELEGRAM_BOT_TOKEN` secret in the Workers Settings dashboard.
+4. Set your Telegram webhook (see [Register Telegram Webhook](#register-telegram-webhook) below).
+
+---
+
+### Option 2: Cloudflare Dashboard (Connect to Git)
+
+Deploy directly from the Cloudflare Web Dashboard without installing anything locally:
+
+1. Open [Cloudflare Dashboard](https://dash.cloudflare.com/) and navigate to **Workers & Pages**.
+2. Click **Create Application** > **Workers** > **Connect to Git**.
+3. Select your GitHub repository (`ImFardad/hallucination-telegram-bot`).
+4. Click **Save and Deploy**. Cloudflare will automatically build and deploy your worker.
+5. In your Worker dashboard:
+   - Go to **Settings** > **Variables and Secrets** > add `TELEGRAM_BOT_TOKEN`.
+   - Go to **Settings** > **Bindings** > add a **KV namespace** bound to variable name `CHAT_HISTORY`.
+   - Go to **Settings** > **Bindings** > add a **Workers AI** binding bound to variable name `AI`.
+
+---
+
+### Option 3: Automated GitHub Actions CI/CD
+
+This repository includes a pre-configured GitHub Actions workflow in [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml).
+
+Every time you `git push` to `main`, GitHub will automatically build, typecheck, and deploy your Worker!
+
+To enable this:
+1. Go to your GitHub repository **Settings** > **Secrets and variables** > **Actions**.
+2. Add the following repository secrets:
+   - `CLOUDFLARE_API_TOKEN`: Cloudflare API token with `Workers:Edit` permissions.
+   - `CLOUDFLARE_ACCOUNT_ID`: Your Cloudflare account ID (found in the Cloudflare sidebar).
+
+---
+
+### Option 4: Local Terminal (Wrangler CLI)
+
+If you prefer deploying via your local terminal using Wrangler:
+
+#### 1. Clone & Install Dependencies
 
 ```bash
 git clone https://github.com/ImFardad/hallucination-telegram-bot.git
