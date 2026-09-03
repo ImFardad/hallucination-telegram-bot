@@ -17,6 +17,9 @@ export interface Env {
   MAX_HISTORY_MESSAGES?: string | number;
   HISTORY_TTL_SECONDS?: string | number;
   SYSTEM_PROMPT?: string;
+  TEMPERATURE?: string | number;
+  TOP_P?: string | number;
+  REPETITION_PENALTY?: string | number;
 }
 
 /**

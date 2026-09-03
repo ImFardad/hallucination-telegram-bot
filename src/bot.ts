@@ -88,13 +88,22 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
     // 1. Fetch conversational history from KV
     const history = await getHistory(env.CHAT_HISTORY, chatId);
 
+    const temperature =
+      env.TEMPERATURE !== undefined && env.TEMPERATURE !== '' ? Number(env.TEMPERATURE) : 1.35;
+    const topP = env.TOP_P !== undefined && env.TOP_P !== '' ? Number(env.TOP_P) : 0.98;
+    const repetitionPenalty =
+      env.REPETITION_PENALTY !== undefined && env.REPETITION_PENALTY !== ''
+        ? Number(env.REPETITION_PENALTY)
+        : 1.15;
+
     // 2. Generate response from Workers AI
     const aiReply = await generateChatResponse(
       env.AI,
       model,
       systemPrompt,
       history,
-      rawText
+      rawText,
+      { temperature, topP, repetitionPenalty }
     );
 
     // 3. Save new exchange into KV history
