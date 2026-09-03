@@ -1,6 +1,6 @@
 import { ChatMessage } from './types';
 
-export const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct';
+export const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct-fast';
 
 export const DEFAULT_SYSTEM_PROMPT =
   'You are an intelligent, articulate, and helpful AI assistant on Telegram. ' +
@@ -8,7 +8,7 @@ export const DEFAULT_SYSTEM_PROMPT =
   'Provide well-reasoned, direct answers, and format your output cleanly for mobile chat.';
 
 /**
- * Executes chat completion through Cloudflare Workers AI
+ * Executes chat completion through Cloudflare Workers AI with automatic fallback
  */
 export async function generateChatResponse(
   ai: Ai,
@@ -24,30 +24,47 @@ export async function generateChatResponse(
     { role: 'user', content: newUserMessage },
   ];
 
-  try {
-    const output = (await ai.run(model as any, {
-      messages,
-      max_tokens: 1024,
-      temperature: 0.7,
-    })) as any;
+  // Candidates to try in priority order
+  const candidateModels = Array.from(
+    new Set([
+      model,
+      '@cf/meta/llama-3.1-8b-instruct-fast',
+      '@cf/meta/llama-3.2-3b-instruct',
+    ])
+  );
 
-    let responseText = '';
+  let lastError: any = null;
 
-    if (typeof output === 'string') {
-      responseText = output;
-    } else if (output && typeof output.response === 'string') {
-      responseText = output.response;
-    } else if (output && output.result && typeof output.result.response === 'string') {
-      responseText = output.result.response;
-    } else if (output && typeof output.text === 'string') {
-      responseText = output.text;
-    } else {
-      responseText = JSON.stringify(output);
+  for (const candidate of candidateModels) {
+    try {
+      const output = (await ai.run(candidate as any, {
+        messages,
+        max_tokens: 1024,
+      })) as any;
+
+      let responseText = '';
+
+      if (typeof output === 'string') {
+        responseText = output;
+      } else if (output && typeof output.response === 'string') {
+        responseText = output.response;
+      } else if (output && output.result && typeof output.result.response === 'string') {
+        responseText = output.result.response;
+      } else if (output && typeof output.text === 'string') {
+        responseText = output.text;
+      } else if (output) {
+        responseText = JSON.stringify(output);
+      }
+
+      if (responseText && responseText.trim()) {
+        return responseText.trim();
+      }
+    } catch (err: any) {
+      console.warn(`Model ${candidate} failed:`, err?.message || err);
+      lastError = err;
     }
-
-    return responseText.trim();
-  } catch (error: any) {
-    console.error('Workers AI execution failed:', error);
-    throw new Error(`AI generation error: ${error?.message || 'Unknown error'}`);
   }
+
+  console.error('All Workers AI candidate models failed. Last error:', lastError);
+  throw new Error(`Workers AI execution failed: ${lastError?.message || lastError}`);
 }

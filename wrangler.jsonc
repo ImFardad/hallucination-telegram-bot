@@ -22,7 +22,7 @@
     // Fill with your Telegram Bot Token in the Cloudflare Dashboard
     "TELEGRAM_BOT_TOKEN": "",
     // High-intelligence lightweight model with strong multilingual & Persian reasoning
-    "AI_MODEL": "@cf/meta/llama-3.1-8b-instruct",
+    "AI_MODEL": "@cf/meta/llama-3.1-8b-instruct-fast",
     // Number of recent conversation messages to retain in memory
     "MAX_HISTORY_MESSAGES": 10,
     // Conversation expiration in seconds (default: 7 days)

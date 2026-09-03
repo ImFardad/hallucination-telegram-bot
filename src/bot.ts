@@ -112,7 +112,7 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
     await sendMessage(
       token,
       chatId,
-      '⚠️ Sorry, an error occurred while processing your request. Please try again or use `/new` to reset.',
+      '⚠️ در پردازش پیام خطایی رخ داد. لطفاً دوباره پیام دهید یا با `/new` چت جدیدی شروع کنید.',
       message.message_id
     );
   }
