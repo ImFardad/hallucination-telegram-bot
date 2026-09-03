@@ -11,7 +11,9 @@ export default {
         JSON.stringify({
           status: 'ok',
           service: 'hallucination-telegram-bot',
-          message: 'Telegram AI Bot Worker is active and healthy.',
+          version: '1.0.2',
+          tokenConfigured: Boolean(env.TELEGRAM_BOT_TOKEN && env.TELEGRAM_BOT_TOKEN.trim() !== ''),
+          message: 'Telegram AI Bot Worker is active and ready.',
         }),
         {
           status: 200,
@@ -22,14 +24,6 @@ export default {
 
     // Telegram webhook handler (supports root / and /webhook)
     if (request.method === 'POST' && (url.pathname === '/' || url.pathname === '/webhook')) {
-      // Optional Secret Token verification
-      if (env.SECRET_TOKEN) {
-        const receivedToken = request.headers.get('X-Telegram-Bot-Api-Secret-Token');
-        if (receivedToken !== env.SECRET_TOKEN) {
-          console.warn('Unauthorized webhook request: secret token mismatch');
-          return new Response('Unauthorized', { status: 401 });
-        }
-      }
 
       try {
         const update: TelegramUpdate = await request.json();

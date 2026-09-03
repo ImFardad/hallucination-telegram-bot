@@ -21,8 +21,6 @@
   "vars": {
     // Fill with your Telegram Bot Token in the Cloudflare Dashboard
     "TELEGRAM_BOT_TOKEN": "",
-    // Optional secret token for webhook verification
-    "SECRET_TOKEN": "",
     // Lightweight model with strong multilingual / Persian capabilities
     "AI_MODEL": "@cf/meta/llama-3.2-3b-instruct",
     // Number of recent conversation messages to retain in memory
