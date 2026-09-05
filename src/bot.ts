@@ -35,10 +35,9 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
     switch (command) {
       case '/start': {
         const startMessage =
-          '👋 سلام! من دستیار هوش مصنوعی شما هستم.\n' +
-          'هر پیام یا سوالی دارید به فارسی یا انگلیسی بفرستید تا گفتگو کنیم. 💬\n\n' +
-          '• `/new` — شروع چت جدید (پاک‌سازی حافظه)\n' +
-          '• `/help` — راهنما';
+          'Hello, Im your AI assistant\n' +
+          '• `/new` — start new chat\n' +
+          '• `/help` — guide';
         await sendMessage(token, chatId, startMessage);
         return;
       }
@@ -48,17 +47,15 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
       case '/reset': {
         await clearHistory(env.CHAT_HISTORY, chatId);
         const resetMessage =
-          '🔄 **Conversation memory has been cleared!**\n\n' +
-          'حافظه گفت‌وگو پاک شد. چت جدید آغاز شد! هر پیامی که بفرستید گفت‌وگوی جدیدی خواهد بود.';
+          'Conversation memory has been cleared!\n'
         await sendMessage(token, chatId, resetMessage);
         return;
       }
 
       case '/help': {
         const helpMessage =
-          '🤖 **Bot Help & Guide**\n\n' +
-          '• **Natural Chat**: Send any question or prompt in Persian or English.\n' +
-          '• **Memory**: I remember previous messages in our conversation so you can ask follow-up questions.\n' +
+          'Bot Help & Guide\n\n' +
+          '• Memory: I remember previous messages in our conversation so you can ask follow-up questions.\n' +
           '• `/new` / `/clear`: Reset memory whenever you want to start a fresh topic.\n' +
           '• `/model`: Check which Workers AI model is currently answering your prompts.';
         await sendMessage(token, chatId, helpMessage);
@@ -67,7 +64,7 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
 
       case '/model': {
         const modelMessage =
-          `⚡ **Active AI Model:**\n\`${model}\`\n\n` +
+          `Active AI Model:\n\`${model}\`\n\n` +
           `• Runtime: Cloudflare Workers\n` +
           `• Memory: Cloudflare KV (Last ${maxHistory} messages)\n` +
           `• Low-consumption & fast inference enabled.`;
@@ -117,7 +114,7 @@ export async function handleTelegramUpdate(update: TelegramUpdate, env: Env): Pr
     await sendMessage(
       token,
       chatId,
-      '⚠️ در پردازش پیام خطایی رخ داد. لطفاً دوباره پیام دهید یا با `/new` چت جدیدی شروع کنید.',
+      'Error!',
       message.message_id
     );
   }

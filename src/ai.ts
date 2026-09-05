@@ -4,7 +4,7 @@ export const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct-fast';
 
 export const DEFAULT_SYSTEM_PROMPT =
   'You are an AI assistant communicating on Telegram. ' +
-  'Always respond strictly in fluent, natural Persian (فارسی) or English based on the language of the user message. ' +
+  'Always respond strictly in fluent, natural Persian or English based on the language of the user message. ' +
   'Keep your answers concise, clear, and coherent (maximum 2 to 3 paragraphs). ' +
   'Never output random symbols, broken tokens, or mixed unrelated languages.';
 
